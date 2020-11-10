@@ -25,3 +25,6 @@ SECRET_KEY: str = os.getenv('SECRET_KEY', secrets.token_urlsafe(32))
 
 # ~~~~~ JWT ~~~~~
 ACCESS_TOKEN_EXPIRE_MINUTES: int = os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES', 60 * 24 * 8)
+
+# ~~~~~ LOGGING ~~~~~
+LOGLEVEL: str = os.getenv('LOGLEVEL', 'INFO')

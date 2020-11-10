@@ -2,10 +2,10 @@ install:
 	pip3 install -r requirements.txt
 
 dev-server:
-	cd app && uvicorn main:app --reload
+	uvicorn app.main:app --reload
 
 server:
-	cd app && uvicorn main:app
+	uvicorn app.main:app
 
 tests:
 	pytest --cov=app app/tests

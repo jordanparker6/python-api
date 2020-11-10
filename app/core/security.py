@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Any, Union
-from jose import jwt
+import jose.jwt as jwt
 from passlib.context import CryptContext
 
 from app.core import config
@@ -12,6 +12,15 @@ ALGORITHM = "HS256"
 def create_access_token(
     subject: Union[str, Any], expires_delta: timedelta = None
 ) -> str:
+    """Encodes a JWT
+
+    Args:
+        subject (Union[str, Any]): [description]
+        expires_delta (timedelta, optional): The JWT expiry timedelta. Defaults to None.
+
+    Returns:
+        str: The JWT hash.
+    """
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
@@ -24,8 +33,24 @@ def create_access_token(
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verifies a password against a hashed pasword using passlib
+
+    Args:
+        plain_password (str): [description]
+        hashed_password (str): [description]
+
+    Returns:
+        bool: [description]
+    """
     return pwd_context.verify(plain_password, hashed_password)
 
-
 def get_password_hash(password: str) -> str:
+    """Hashes a password string using passlib.
+
+    Args:
+        password (str): The password.
+
+    Returns:
+        str: The password hash.
+    """
     return pwd_context.hash(password)

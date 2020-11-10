@@ -2,9 +2,10 @@ fastAPI
 uvicorn
 starlette
 pydantic
-jose
+python-jose
 passlib
 pytest
 pytest-cov
 sqlalchemy
 psycopg2-binary
+pylint

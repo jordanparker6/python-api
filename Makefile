@@ -4,8 +4,12 @@ install:
 dev-server:
 	uvicorn app.main:app --reload
 
-server:
+server: tests
 	uvicorn app.main:app
 
+lint:
+	pylint app
+
 tests:
+	pylint -j 0 --disable=R,C app
 	pytest --cov=app app/tests

@@ -7,7 +7,7 @@ from api.router import router
 
 app = FastAPI(
     title=config.PROJECT_NAME, 
-    openapi_url=f"/{config.API_VERSION}/openapi.json"
+    openapi_url=f"{config.API_VERSION}/openapi.json"
 )
 
 # Set all CORS enabled origins

@@ -1,12 +1,13 @@
 from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from urllib import parse
+from urllib.parse import quote
 
 from app.core import config
 
 def create_db_uri(db):
-    return parse("{}://{}:{}@{}:{}/{}".format(db["type"], db["username"], db["password"], db["host"], db["port"], db["database"]))
+    #db = {k : quote(v) for k, v in db.items()}
+    return "{}://{}:{}@{}:{}/{}".format(db["type"], db["username"], db["password"], db["host"], db["port"], db["database"])
 
 db_uri = create_db_uri(config.DATABASE)
 engine = create_engine(db_uri, pool_pre_ping=True)

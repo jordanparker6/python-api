@@ -59,3 +59,7 @@ data/
 
 # Mac OS
 .DS_Store
+
+# Testing
+.coverage
+.pytest_cache

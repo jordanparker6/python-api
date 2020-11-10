@@ -6,3 +6,6 @@ dev-server:
 
 server:
 	cd app && uvicorn main:app
+
+tests:
+	pytest --cov=app app/tests

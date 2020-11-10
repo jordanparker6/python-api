@@ -4,3 +4,7 @@ starlette
 pydantic
 jose
 passlib
+pytest
+pytest-cov
+sqlalchemy
+psycopg2-binary

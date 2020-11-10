@@ -1,4 +1,5 @@
-![example branch parameter](https://github.com/jordanhparker6/python-api/workflows/tests/badge.svg?branch=main)
+![example branch parameter](https://github.com/jordanparker6/python-api/workflows/tests/badge.svg?branch=main)
+
 <a href="https://gitmoji.carloscuesta.me">
   <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square" alt="Gitmoji">
 </a>

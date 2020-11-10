@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+  db:
+    container_name: python-api-db
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: fastapi
+      POSTGRES_USER: fastapi
+      POSTGRES_DB: fastapi
+
+  app:
+    container_name: python-api-app
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.7
+    working_dir: /app
+    environment:
+      database: fastapi
+      username: fastapi
+      password: fastapi
+      host: db
+      PYTHONPATH: /code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    volumes:
+      - ../:/app

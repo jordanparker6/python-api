@@ -1,0 +1,6 @@
+fastAPI
+uvicorn
+starlette
+pydantic
+jose
+passlib

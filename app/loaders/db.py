@@ -1,12 +1,12 @@
 from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-#from urllib.parse import quote
+from urllib.parse import quote
 
 from app.core import config
 
 def create_db_uri(db):
-    #db = {k : quote(v) for k, v in db.items()}
+    db = {k : quote(v) for k, v in db.items()}
     return "{}://{}:{}@{}:{}/{}".format(
         db["type"],
         db["username"],

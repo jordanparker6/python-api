@@ -17,3 +17,11 @@ To run a development server with hot reloading.
 To run a production server.
 
 `make server`
+
+To run tests.
+
+`make tests`
+
+To run linting using pylint (all linting options on).
+
+`make lint`

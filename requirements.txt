@@ -1,7 +1,8 @@
 fastAPI
+requests
 uvicorn
-starlette
 pydantic
+pandas
 python-jose
 passlib
 pytest

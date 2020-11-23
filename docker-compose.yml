@@ -1,28 +1,61 @@
 version: '3.1'
 
 services:
-
-  db:
-    container_name: python-api-db
-    image: postgres
+  api:
+    container_name: python-api-dev
+    image: python:3.8-slim-buster
+    working_dir: /api
     environment:
-      POSTGRES_PASSWORD: fastapi
-      POSTGRES_USER: fastapi
-      POSTGRES_DB: fastapi
-
-  app:
-    container_name: python-api-app
-    image: tiangolo/uvicorn-gunicorn-fastapi:python3.7
-    working_dir: /app
-    environment:
-      database: fastapi
-      username: fastapi
-      password: fastapi
-      host: db
-      PYTHONPATH: /code
-    ports:
-      - 8000:8000
+      DATABASE: pythonapi
+      DATABSE_USER: admin
+      DATABASE_PASSWORD: admin
+      DATABASE_HOST: db
+    volumes:
+      - .:/api
+    command: sh -c "apt-get update && apt-get -y upgrade && apt-get -y install make && apt-get clean && make dev-server"
     depends_on:
       - db
-    volumes:
-      - ../:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - db
+    restart: unless-stopped
+
+  db:
+    container_name: db-dev
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: pythonapi
+    ports:
+      - "5432:5432"
+    networks:
+      - db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    logging:
+      driver: "none"
+    depends_on:
+      - db
+    ports:
+      - "5050:80"
+    networks:
+      - db
+    restart: unless-stopped
+    
+networks:
+  db:
+    driver: bridge

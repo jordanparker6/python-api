@@ -1,3 +1,4 @@
+"""The base logging class"""
 import os
 import logging
 

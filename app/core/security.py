@@ -1,3 +1,5 @@
+"""Utility functions for security.
+"""
 from datetime import datetime, timedelta
 from typing import Any, Union
 import jose.jwt as jwt
@@ -15,7 +17,7 @@ def create_access_token(
     """Encodes a JWT
 
     Args:
-        subject (Union[str, Any]): [description]
+        subject (Union[str, Any]): The content of the JWT.
         expires_delta (timedelta, optional): The JWT expiry timedelta. Defaults to None.
 
     Returns:
@@ -36,11 +38,11 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verifies a password against a hashed pasword using passlib
 
     Args:
-        plain_password (str): [description]
-        hashed_password (str): [description]
+        plain_password (str): The raw pasword string.
+        hashed_password (str): A hashed password string.
 
     Returns:
-        bool: [description]
+        bool: Outcome of the password verification.
     """
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -48,9 +50,9 @@ def get_password_hash(password: str) -> str:
     """Hashes a password string using passlib.
 
     Args:
-        password (str): The password.
+        password: The password.
 
     Returns:
-        str: The password hash.
+        The password hash.
     """
     return pwd_context.hash(password)

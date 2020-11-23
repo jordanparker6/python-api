@@ -6,6 +6,20 @@ A template for Python APIs using the FastAPI framework.
 
 ### Instalation and Usage
 
+To build the development enviroment (e.g. Postgres Database, PgAdmin4 and API server).
+
+`make dev-env`
+
+To run tests.
+
+`make tests`
+
+To run linting using pylint (all linting options on).
+
+`make lint`
+
+#### Other scripts inclued the following
+
 To install required dependancies.
 
 `make install`
@@ -18,10 +32,4 @@ To run a production server.
 
 `make server`
 
-To run tests.
 
-`make tests`
-
-To run linting using pylint (all linting options on).
-
-`make lint`

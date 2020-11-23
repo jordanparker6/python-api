@@ -2,7 +2,7 @@ from typing import Generator
 import pytest
 from fastapi.testclient import TestClient
 
-from app.loaders import Database
+from app.loaders.database import Database
 from app.main import app
 
 @pytest.fixture(scope="session")

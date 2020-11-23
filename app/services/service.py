@@ -11,5 +11,5 @@ class Service(Logger):
 
     def test(self):
         result = self._db.execute("SELECT 1;")
-        self.log.info(f"Executed Test: \n{str(result)}")
+        self.log.info("Executed Test: \n%s", str(result))
         return result

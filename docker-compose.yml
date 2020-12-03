@@ -10,13 +10,14 @@ services:
       DATABSE_USER: admin
       DATABASE_PASSWORD: admin
       DATABASE_HOST: db
+      DATABASE_TYPE: postgresql
     volumes:
       - .:/api
-    command: sh -c "apt-get update && apt-get -y upgrade && apt-get -y install make && apt-get clean && make dev-server"
+    command: sh -c "apt-get update && apt-get -y upgrade && apt-get -y install make && apt-get clean && make server"
     depends_on:
       - db
     ports:
-      - "8000:8000"
+      - "80:80"
     networks:
       - db
     restart: unless-stopped

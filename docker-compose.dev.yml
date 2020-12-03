@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+
+    api:
+      container_name: python-api-dev
+      command: sh -c "apt-get update && apt-get -y upgrade && apt-get -y install make && apt-get clean && make dev-server"
+      ports:
+      - "8000:8000"

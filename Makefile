@@ -7,8 +7,11 @@ dev-server: install
 server: tests
 	uvicorn app.main:app --host 0.0.0.0 --port 80
 
-dev-env:
+prod-env:
 	docker-compose up
+
+dev-env:
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
 
 lint:
 	pylint apps

@@ -1,0 +1,67 @@
+---
+# Create a Deployment for the Python API (inc. cloud sql proxy)
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: prod-api-deployment
+  labels:
+    app: python-api
+    tier: backend
+    env: prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-api
+      tier: backend
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: python-api
+        tier: backend
+        env: prod
+    spec:
+      containers:
+      - name: python-api-prod
+        image: image_name
+        envFrom:
+        - configMapRef:
+          name: python-api-config
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 30
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy
+        command: ["/cloud_sql_proxy", "-instances=", "-credential_file=/secrets/cloudsql/credentials.json"]
+        securityContext:
+          runAsUser: 2
+          allowPrivilegeEscalation: False
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrects/cloudsql
+            readOnly: true
+      volumes:
+      - name: cloudsql-instance-credentials
+        secret:
+          secretName: cloudsql-instance-credentials
+---
+# Define a ConfigMap for the Python API
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: python-api-config
+data:
+  ENV: production
+  DATABASE: pythonapi
+  DATABSE_USER: admin
+  DATABASE_HOST: db
+  DATABASE_TYPE: postgresql
+---

@@ -1,0 +1,80 @@
+---
+# Create a Deployment for the Python API
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: python-api
+  labels:
+    app: python-api
+    tier: backend
+    env: test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-api
+      tier: backend
+      env: test
+  template:
+    metadata:
+      labels:
+        app: python-api
+        tier: backend
+        env: test
+    spec:
+      containers:
+      - name: python-api
+        image: image_name
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 30
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+---
+# Create a Pod For the Test Database
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db
+  labels:
+    app: db
+    tier: backend
+    env: test
+spec:
+  containers:
+  - name: test-pg
+    image: postgres
+    env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: password
+    ports:
+    - containerPort: 5437
+      name: pg
+    volumeMounts:
+      - name: pg-persistent-storage
+        mountPath: /var/lib/postgresql/data
+  volumes:
+  - name: pg-persistent-storage
+    persistentVolumeClaim:
+      claimName: pg-volumeclaim
+---
+# Create a Persistent Volume for the Test Database
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pg-volumeclaim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
